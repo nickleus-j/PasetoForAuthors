@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PasetoMaker", "PasetoMaker\PasetoMaker.csproj", "{3037BF71-1DA0-4AD1-9304-64D7BC5FD0C4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpineHere.Identity", "OpineHere.Identity\OpineHere.Identity.csproj", "{671DEF77-1AE4-432D-985B-919398805DDE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,13 @@ Global
 		{3037BF71-1DA0-4AD1-9304-64D7BC5FD0C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3037BF71-1DA0-4AD1-9304-64D7BC5FD0C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3037BF71-1DA0-4AD1-9304-64D7BC5FD0C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{671DEF77-1AE4-432D-985B-919398805DDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{671DEF77-1AE4-432D-985B-919398805DDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{671DEF77-1AE4-432D-985B-919398805DDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{671DEF77-1AE4-432D-985B-919398805DDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2A8B36C-0C5A-4C31-B82E-732B089AA568}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2A8B36C-0C5A-4C31-B82E-732B089AA568}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2A8B36C-0C5A-4C31-B82E-732B089AA568}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2A8B36C-0C5A-4C31-B82E-732B089AA568}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

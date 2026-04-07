@@ -1,0 +1,6 @@
+@OpineHere.Identity_HostAddress = http://localhost:5090
+
+GET {{OpineHere.Identity_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
