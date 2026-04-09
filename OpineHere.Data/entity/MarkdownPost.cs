@@ -9,12 +9,15 @@ namespace OpineHere.Data.entity;
 [Table("MarkdownPost")]
 public class MarkdownPost
 {
+    [Key]
     public Guid Id { get; set; } = Guid.NewGuid();
 
     /// <summary>
     /// The raw Markdown text content.
     /// </summary>
     public string Content { get; set; } = string.Empty;
+    [MinLength(3)]
+    public string Title { get; set; } = string.Empty;
 
     /// <summary>
     /// Unique identifier for a registered user. Null if using a Pen Name.
@@ -24,6 +27,7 @@ public class MarkdownPost
     /// <summary>
     /// A custom display name for the author. Null if using a UserId.
     /// </summary>
+    [DisplayName("Pen Name")]
     public string? PenName { get; set; }
 
     public DateTimeOffset PostDate { get; set; } = DateTimeOffset.UtcNow;

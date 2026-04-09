@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using OpineHere.Data.entity;
+
 namespace OpineHere.EntityFramework;
 
 public class EfUnitOfWork: IDataUnitOfWork

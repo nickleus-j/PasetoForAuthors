@@ -12,11 +12,12 @@ public class MarkdownPostRepo:EfRepository<MarkdownPost>,IMarkdownPostRepo
     {
         get { return Context as OpineContext; }
     }
-    public async Task PenNamePost(string PenName, string body)
+    public async Task PenNamePost(string PenName, string body,string title="A Post")
     {
         var post = new MarkdownPost
         {
             PenName = PenName,
+            Title = title,
             Content = body,
             LastUpdate = DateTime.UtcNow,
             PostDate = DateTime.UtcNow,

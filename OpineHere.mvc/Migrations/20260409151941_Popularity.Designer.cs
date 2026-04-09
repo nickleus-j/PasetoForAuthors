@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OpineHere.EntityFramework;
 
@@ -10,9 +11,11 @@ using OpineHere.EntityFramework;
 namespace OpineHere.mvc.Migrations
 {
     [DbContext(typeof(OpineContext))]
-    partial class OpineContextModelSnapshot : ModelSnapshot
+    [Migration("20260409151941_Popularity")]
+    partial class Popularity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

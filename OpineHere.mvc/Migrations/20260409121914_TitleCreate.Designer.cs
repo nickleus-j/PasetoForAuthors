@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OpineHere.EntityFramework;
 
@@ -10,9 +11,11 @@ using OpineHere.EntityFramework;
 namespace OpineHere.mvc.Migrations
 {
     [DbContext(typeof(OpineContext))]
-    partial class OpineContextModelSnapshot : ModelSnapshot
+    [Migration("20260409121914_TitleCreate")]
+    partial class TitleCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -267,32 +270,6 @@ namespace OpineHere.mvc.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MarkdownPost");
-                });
-
-            modelBuilder.Entity("OpineHere.Data.entity.PopularityApproval", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsApproved")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<Guid>("PostId")
-                        .HasMaxLength(40)
-                        .HasColumnType("char(40)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("varchar(40)");
-
-                    b.Property<bool>("inUse")
-                        .HasColumnType("tinyint(1)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PopularityApproval");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

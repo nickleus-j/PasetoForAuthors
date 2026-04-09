@@ -15,6 +15,7 @@ public class OpineContext: IdentityDbContext
     {
     }
     public virtual DbSet<MarkdownPost> MarkdownPost { get; set; }
+    public virtual DbSet<PopularityApproval> PopularityApproval { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
