@@ -1,16 +1,16 @@
 ﻿services:
   db:
-    image: mariadb:latest
-    container_name: mariadb_db
+    image: mysql:latest
+    container_name: mysql_db
     restart: always
     env_file:
       - .env
     environment:
       # Set your database credentials here
-      MARIADB_ROOT_PASSWORD: ${ROOT_PASSWORD}
-      MARIADB_DATABASE: ${DB_NAME}
-      MARIADB_USER: default
-      MARIADB_PASSWORD: ${USER_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: default
+      MYSQL_PASSWORD: ${USER_PASSWORD}
     ports:
       # Maps [Host Port]:[Container Port]
       - "3306:3306"
@@ -18,8 +18,8 @@
       # Ensures your data isn't deleted when the container stops
       - mysql_data:/var/lib/mysql
     healthcheck:
-      # Official MariaDB healthcheck script
-      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+      # Official MySQL healthcheck
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       interval: 10s
       timeout: 5s
       retries: 3

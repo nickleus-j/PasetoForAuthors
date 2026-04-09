@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 namespace OpineHere.Data.entity;
 
-[Table("Job")]
+[Table("MarkdownPost")]
 public class MarkdownPost
 {
     public Guid Id { get; set; } = Guid.NewGuid();

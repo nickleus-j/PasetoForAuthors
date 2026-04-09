@@ -5,15 +5,8 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-        <UserSecretsId>4276344f-d8f3-4bfd-a06c-821fbf8e5c33</UserSecretsId>
+        <UserSecretsId>dcd0e347-a588-4a64-850b-107839e12256</UserSecretsId>
     </PropertyGroup>
-
-    <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
-        <PackageReference Include="MySql.EntityFrameworkCore" Version="10.0.1" />
-        <PackageReference Include="Paseto.Core" Version="1.5.0" />
-    </ItemGroup>
 
     <ItemGroup>
       <Content Include="..\.dockerignore">
@@ -22,8 +15,21 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.5">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="MySql.EntityFrameworkCore" Version="10.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\OpineHere.Data\OpineHere.Data.csproj" />
       <ProjectReference Include="..\OpineHere.EntityFramework\OpineHere.EntityFramework.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Migrations\" />
     </ItemGroup>
 
 </Project>
