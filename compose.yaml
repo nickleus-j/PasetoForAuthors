@@ -1,0 +1,44 @@
+﻿services:
+  db:
+    image: mariadb:latest
+    container_name: mariadb_db
+    restart: always
+    env_file:
+      - .env
+    environment:
+      # Set your database credentials here
+      MARIADB_ROOT_PASSWORD: ${ROOT_PASSWORD}
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: default
+      MARIADB_PASSWORD: ${USER_PASSWORD}
+    ports:
+      # Maps [Host Port]:[Container Port]
+      - "3306:3306"
+    volumes:
+      # Ensures your data isn't deleted when the container stops
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      # Official MariaDB healthcheck script
+      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+      
+  opinehere.identity:
+    build:
+      context: .
+      dockerfile: OpineHere.Identity/Dockerfile
+    container_name: opineIdentity
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=localhost;Port=3306;Database=${DB_NAME};Uid=root;Pwd=${ROOT_PASSWORD};"
+      DefaultUserPassword: ${USER_PASSWORD}
+      dockerfile: OpineHere.Identity/Dockerfile
+    ports:
+      - "5100:8080"
+    #http://localhost:5100/api/Identity/me
+volumes:
+  mysql_data:
