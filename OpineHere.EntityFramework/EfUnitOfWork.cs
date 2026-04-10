@@ -10,7 +10,7 @@ namespace OpineHere.EntityFramework;
 public class EfUnitOfWork: IDataUnitOfWork
 {
     private readonly OpineContext _context;
-    public MarkdownPostRepo MarkdownPostRepo{ get; private set; }
+    public IMarkdownPostRepo MarkdownPostRepo{ get; private set; }
     public EfUnitOfWork(OpineContext context)
     {
         _context = context;

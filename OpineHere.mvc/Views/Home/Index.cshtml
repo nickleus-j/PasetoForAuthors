@@ -1,8 +1,21 @@
-﻿@{
+﻿@model IEnumerable<OpineHere.Data.entity.MarkdownPost>
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">@ViewData["Title"]</h1>
 </div>
+@foreach (var post in Model)
+{
+    <div class="card mb-4 bg-light">
+        <div class="card-header">
+            <label class="form-label fw-bold mb-3">@post.Title</label>
+        </div>
+        <div class="card-body">
+            <div id="penNameSection" class="mt-3">
+                @post.Content
+            </div>
+        </div>
+    </div>
+}
