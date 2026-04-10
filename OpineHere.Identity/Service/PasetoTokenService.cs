@@ -33,7 +33,7 @@ public class PasetoTokenService : ITokenService
             var token = new PasetoBuilder()
                 .UseV4(Purpose.Public)
                 .WithKey(secretKey)
-                .AddClaim("sub", userId)
+                .AddClaim("uid", userId)
                 .AddClaim("email", email)
                 .AddClaim("service", "identity-service")
                 .Issuer("https://yourdomain.com/identity")
