@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>PASETO Auth Demo</title>
+    <style>
+        .hidden { display: none; }
+        #user-info { padding: 20px; border: 1px solid #ccc; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div id="login-section">
+    <button onclick="simulateLogin()">Simulate Login</button>
+</div>
+
+<div id="auth-section" class="hidden">
+    <h2>Welcome Back!</h2>
+    <div id="user-info"></div>
+    <button onclick="logout()">Logout</button>
+</div>
+
+<script>
+    // 1. Storage Keys
+    const TOKEN_KEY = 'paseto_token';
+
+    // 2. Decode PASETO Payload (The "v4.public" part)
+    function parsePasetoPayload(token) {
+        try {
+            const parts = token.split('.');
+            if (parts.length < 3) throw new Error("Invalid PASETO format");
+
+            // The payload is the 3rd part (index 2)
+            let base64Url = parts[2];
+
+            // Base64URL to Base64 conversion
+            let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+
+            // Decode string and parse JSON
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+
+            return JSON.parse(jsonPayload);
+        } catch (e) {
+            console.error("Failed to decode token:", e);
+            return null;
+        }
+    }
+
+    // 3. Update UI based on Auth State
+    function updateUI() {
+        const token = localStorage.getItem(TOKEN_KEY);
+        const loginSection = document.getElementById('login-section');
+        const authSection = document.getElementById('auth-section');
+        const userInfo = document.getElementById('user-info');
+
+        if (token) {
+            const payload = parsePasetoPayload(token);
+            if (payload) {
+                loginSection.classList.add('hidden');
+                authSection.classList.remove('hidden');
+                userInfo.innerHTML = `
+                        <p><strong>Email:</strong> ${payload.email}</p>
+                        <p><strong>User ID:</strong> ${payload.uid}</p>
+                        <p><strong>Expires:</strong> ${new Date(payload.exp).toLocaleString()}</p>
+                    `;
+                return;
+            }
+        }
+
+        // Default to logged out
+        loginSection.classList.remove('hidden');
+        authSection.classList.add('hidden');
+    }
+
+    // 4. Simulate receiving the token from your API
+    function simulateLogin() {
+        const response = {
+            "token": "v4.public.eyJ1aWQiOiI2NDkzNWI0Yy0yMmJkLTQ5NTQtODYyNS05ZmM1ZmY4MTc3OTQiLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJzZXJ2aWNlIjoiaWRlbnRpdHktc2VydmljZSIsImlzcyI6Imh0dHBzOi8veW91cmRvbWFpbi5jb20vaWRlbnRpdHkiLCJhdWQiOiJpbnRlcm5hbC1zZXJ2aWNlcyIsInN1YiI6IjY0OTM1YjRjLTIyYmQtNDk1NC04NjI1LTlmYzVmZjgxNzc5NCIsImlhdCI6IjIwMjYtMDQtMTBUMDg6Mjc6NDEuMzczMTcxWiIsIm5iZiI6IjIwMjYtMDQtMTBUMDg6Mjc6NDEuMzczMTcxWiIsImV4cCI6IjIwMjYtMDQtMTBUMDk6Mjc6NDEuMzczMTcxWiIsImp0aSI6ImQ5MDUxYTBiLTkzMmEtNDkzZC1iOTU4LWU0NGQyY2E1NTRjYyJ9B9pDSxgxoQYK5x8KCU48LsffCtp3B1rmt_D-IL8yo8iT1Zz_7mToAB_Jtqy2kCWPIqx47GPhN-uzif6j43pRAg",
+            "expiresIn": "1h"
+        };
+
+        localStorage.setItem(TOKEN_KEY, response.token);
+        updateUI();
+    }
+
+    function logout() {
+        localStorage.removeItem(TOKEN_KEY);
+        updateUI();
+    }
+
+    // Run on page load
+    updateUI();
+</script>
+</body>
+</html>

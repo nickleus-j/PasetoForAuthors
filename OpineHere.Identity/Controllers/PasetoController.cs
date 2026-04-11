@@ -121,9 +121,9 @@ public class PasetoController : Controller
 
             _logger.LogInformation($"User logged in successfully: {request.Email}");
 
-            return Ok(new
+            return Ok(new AuthResponse
             {
-                token,
+                token=token,
                 expiresIn = "1h",
                 tokenType = "Bearer",
                 userId = user.Id,
