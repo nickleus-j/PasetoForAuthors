@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OpineHere.Data;
 using OpineHere.EntityFramework;
+using OpineHere.mvc;
+using OpineHere.mvc.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -13,10 +15,34 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddTransient<IDataUnitOfWork, EfUnitOfWork>();
 builder.Services.AddDbContext<OpineContext>(options =>
     options.UseMySQL(connectionString, b => b.MigrationsAssembly("OpineHere.mvc")));
+
+//Identity Paseto
+builder.Services.AddHttpClient<PasetoApiClient>(client =>
+{
+    client.BaseAddress = new Uri("http://localhost:5100");
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
+
+builder.Services.AddHttpContextAccessor();
+
+// Add session management for token storage
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SameSite = SameSiteMode.Strict;
+});
+builder.Services.AddPasetoAuthentication();
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
+app.UseSession();
+app.UseRouting();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<OpineContext>();
@@ -41,6 +67,6 @@ app.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
-
+app.UseMiddleware<PasetoTokenMiddleware>();
 
 app.Run();

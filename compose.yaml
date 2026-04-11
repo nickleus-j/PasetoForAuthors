@@ -1,4 +1,4 @@
-﻿services:
+services:
   db:
     image: mysql:latest
     container_name: mysql_db
@@ -34,7 +34,7 @@
       db:
         condition: service_healthy
     environment:
-      ConnectionStrings__DefaultConnection: "Server=localhost;Port=3306;Database=${DB_NAME};Uid=root;Pwd=${ROOT_PASSWORD};"
+      ConnectionStrings__DefaultConnection: "Server=mysql_db;Port=3306;Database=${DB_NAME};Uid=default;Pwd=${USER_PASSWORD};"
       DefaultUserPassword: ${USER_PASSWORD}
       dockerfile: OpineHere.Identity/Dockerfile
     ports:

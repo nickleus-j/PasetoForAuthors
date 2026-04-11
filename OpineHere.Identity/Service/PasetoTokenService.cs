@@ -36,7 +36,7 @@ public class PasetoTokenService : ITokenService
                 .AddClaim("uid", userId)
                 .AddClaim("email", email)
                 .AddClaim("service", "identity-service")
-                .Issuer("https://yourdomain.com/identity")
+                .Issuer("http://localhost:5100/")
                 .Audience("internal-services")
                 .Subject(userId)
                 .IssuedAt(now)
@@ -70,7 +70,7 @@ public class PasetoTokenService : ITokenService
                 ValidateAudience = true,
                 ValidateIssuer = true,
                 ValidAudience = "internal-services",
-                ValidIssuer = "https://localhost/"
+                ValidIssuer = "https://localhost:5100/"
             };
 
             var result = new PasetoBuilder()
