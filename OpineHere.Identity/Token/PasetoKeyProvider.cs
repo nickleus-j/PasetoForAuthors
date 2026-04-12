@@ -9,7 +9,7 @@ public class PasetoKeyProvider : IKeyProvider
 {
     private readonly IConfiguration _config;
     private readonly ILogger<PasetoKeyProvider> _logger;
-    private PasetoKey _secretKey;
+    private PasetoKey _secretKey,_publicKey;
 
     public PasetoKeyProvider(
         IConfiguration config,
@@ -61,7 +61,7 @@ public class PasetoKeyProvider : IKeyProvider
                 .GenerateAsymmetricKeyPair(seed);
 
             _secretKey = keyPair.SecretKey;
-
+            _publicKey=keyPair.PublicKey;
             // Encode keys as PASERK for storage
             var secretPaserk = Paserk.Encode(keyPair.SecretKey,PaserkType.Secret);
             var publicPaserk = Paserk.Encode(keyPair.PublicKey,PaserkType.Public);
@@ -78,13 +78,5 @@ public class PasetoKeyProvider : IKeyProvider
 
     public PasetoKey GetSecretKey() => _secretKey;
 
-    public PasetoKey GetPublicKey()
-    {
-        if (_secretKey is null)
-            throw new InvalidOperationException(
-                "Secret key not initialized");
-
-        // Extract public key from secret key
-        return Paserk.Decode(_secretKey.ToString());
-    }
+    public PasetoKey GetPublicKey()=> _publicKey;
 }

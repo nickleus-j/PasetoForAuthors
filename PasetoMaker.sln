@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpineHere.mvc", "OpineHere.mvc\OpineHere.mvc.csproj", "{A5E13EE7-36B3-4A17-9B51-4E57AD62BCB0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpineHere.Identity.Tests", "OpineHere.Identity.Tests\OpineHere.Identity.Tests.csproj", "{8BBF4E3E-1392-42DE-9460-AC87ED41D119}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,5 +47,9 @@ Global
 		{A5E13EE7-36B3-4A17-9B51-4E57AD62BCB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5E13EE7-36B3-4A17-9B51-4E57AD62BCB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5E13EE7-36B3-4A17-9B51-4E57AD62BCB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BBF4E3E-1392-42DE-9460-AC87ED41D119}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BBF4E3E-1392-42DE-9460-AC87ED41D119}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BBF4E3E-1392-42DE-9460-AC87ED41D119}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BBF4E3E-1392-42DE-9460-AC87ED41D119}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

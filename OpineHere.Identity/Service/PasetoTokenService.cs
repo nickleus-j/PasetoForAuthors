@@ -1,6 +1,7 @@
 using OpineHere.Identity.Token;
 using Paseto;
 using Paseto.Builder;
+using Paseto.Cryptography.Key;
 
 namespace OpineHere.Identity.Service;
 
@@ -36,7 +37,7 @@ public class PasetoTokenService : ITokenService
                 .AddClaim("uid", userId)
                 .AddClaim("email", email)
                 .AddClaim("service", "identity-service")
-                .Issuer("http://localhost:5100/")
+                .Issuer(_config["Issuer"])
                 .Audience("internal-services")
                 .Subject(userId)
                 .IssuedAt(now)
@@ -59,57 +60,68 @@ public class PasetoTokenService : ITokenService
     }
 
     public TokenValidationResult ValidateToken(string token)
+{
+    try
     {
-        try
+        // 1. Get the key from your provider
+        var key = _keyProvider.GetPublicKey();
+
+        // 2. Identify the correct Verification Key
+        PasetoKey verificationKey;
+
+        if (key is PasetoAsymmetricSecretKey secretKey)
         {
-            var secretKey = _keyProvider.GetSecretKey();
+            // IMPORTANT: We do not CAST. We EXTRACT the public part.
+            verificationKey = secretKey; 
+        }
+        else if (key is PasetoAsymmetricPublicKey publicKey)
+        {
+            // If it's already a public key, we're good to go
+            verificationKey = publicKey;
+        }
+        else
+        {
+            throw new InvalidOperationException(
+                $"Key type {key.GetType().Name} is not supported for V4 Public validation.");
+        }
 
-            var validationParams = new PasetoTokenValidationParameters
-            {
-                ValidateLifetime = true,
-                ValidateAudience = true,
-                ValidateIssuer = true,
-                ValidAudience = "internal-services",
-                ValidIssuer = "https://localhost:5100/"
-            };
+        // 3. Configure validation parameters
+        var validationParams = new PasetoTokenValidationParameters
+        {
+            ValidateLifetime = true,
+            ValidateAudience = true,
+            ValidateIssuer = true,
+            ValidAudience = "internal-services",
+            ValidIssuer = _config["Issuer"],
+        };
 
-            var result = new PasetoBuilder()
-                .UseV4(Purpose.Public)
-                .WithKey(secretKey)
-                .Decode(token, validationParams);
+        // 4. Decode using the Verification (Public) Key
+        var result = new PasetoBuilder()
+            .UseV4(Purpose.Public)
+            .WithKey(verificationKey) 
+            .Decode(token, validationParams);
 
-            if (!result.IsValid)
-            {
-                _logger.LogWarning("PASETO token validation failed");
-                return new TokenValidationResult 
-                { 
-                    IsValid = false, 
-                    ErrorMessage = "Token validation failed" 
-                };
-            }
-            var payload = result.Paseto.Payload;
-
-            // Use the .Get<T> method to retrieve specific claims
-            var userId = payload["sub"].ToString();
-            var email = payload["email"].ToString();
-
-            return new TokenValidationResult
-            {
-                IsValid = true,
-                UserId = userId,
-                Email = email
+        if (!result.IsValid)
+        {
+            // Access the internal exception message to see why it failed
+            return new TokenValidationResult 
+            { 
+                IsValid = false, 
+                ErrorMessage = result.Exception?.Message ?? "Validation failed" 
             };
         }
-        catch (Exception ex)
+
+        return new TokenValidationResult
         {
-            _logger.LogError(ex, 
-                "PASETO token validation exception: {Exception}", 
-                ex.Message);
-            return new TokenValidationResult
-            {
-                IsValid = false,
-                ErrorMessage = ex.Message
-            };
-        }
+            IsValid = true,
+            UserId = result.Paseto.Payload["sub"]?.ToString(),
+            Email = result.Paseto.Payload["email"]?.ToString()
+        };
     }
+    catch (Exception ex)
+    {
+        // This is where your "Unable to cast" error was being caught
+        return new TokenValidationResult { IsValid = false, ErrorMessage = ex.Message };
+    }
+}
 }
