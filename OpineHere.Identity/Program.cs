@@ -19,22 +19,18 @@ builder.Services.AddControllers();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-builder.Services.AddSwaggerGen(options =>
+builder.Services.AddSwaggerGen(c =>
 {
-    options.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
+    c.AddSecurityDefinition("Paseto", new OpenApiSecurityScheme
     {
+        Description = "Paseto Authorization header using the Bearer scheme.",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
         Type = SecuritySchemeType.Http,
-        Scheme = "bearer",
-        BearerFormat = "JWT",
-        Description = "JWT Authorization header using the Bearer scheme."
+        Scheme = "Bearer"
     });
 
-    options.AddSecurityRequirement(document => new OpenApiSecurityRequirement
-    {
-        [new OpenApiSecuritySchemeReference("bearer", document)] = []
-    });
 });
-
 // Add services
 builder.Services.AddSingleton<IKeyProvider, PasetoKeyProvider>();
 builder.Services.AddScoped<ITokenService, PasetoTokenService>();

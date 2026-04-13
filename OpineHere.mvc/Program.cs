@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OpineHere.Data;
@@ -26,7 +27,18 @@ builder.Services.AddHttpClient<PasetoApiClient>(client =>
     client.BaseAddress = new Uri("http://localhost:5100");
     client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
-
+builder.Services.AddAuthentication(options =>
+    {
+        // If your library provides a specific Paseto scheme name, use it here.
+        // If you are storing the token in a standard cookie, you'd use CookieAuthenticationDefaults.AuthenticationScheme
+        options.DefaultAuthenticateScheme = "Paseto"; 
+        options.DefaultChallengeScheme = "Paseto";
+    })
+    .AddScheme<AuthenticationSchemeOptions, PasetoAuthenticationHandler>("Paseto", options => 
+    {
+        // If you have a custom Paseto Handler, it gets registered here.
+        // Some libraries might offer a cleaner extension method like .AddPaseto(options => { ... })
+    });
 builder.Services.AddHttpContextAccessor();
 
 // Add session management for token storage

@@ -22,14 +22,15 @@ public class PasetoKeyProvider : IKeyProvider
 
     private void InitializeKey()
     {
-        var keyString = _config["Paseto:SecretKey"];
+        var secretKeyString = _config["Paseto:SecretKey"];
 
-        if (!string.IsNullOrEmpty(keyString))
+        if (!string.IsNullOrEmpty(secretKeyString))
         {
             try
             {
                 // Decode the PASERK-encoded key
-                _secretKey = Paserk.Decode(keyString);
+                _secretKey = Paserk.Decode(secretKeyString);
+                
                 _logger.LogInformation(
                     "PASETO signing key loaded from configuration");
                 return;
