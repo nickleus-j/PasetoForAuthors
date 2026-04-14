@@ -33,4 +33,13 @@
     <data name="Register" xml:space="preserve">
         <value>Register</value>
     </data>
+    <data name="Logout" xml:space="preserve">
+        <value>Log off</value>
+    </data>
+    <data name="MakePost" xml:space="preserve">
+        <value>Opine</value>
+    </data>
+    <data name="PasetoSchemeName" xml:space="preserve">
+        <value>PasetoBearerScheme</value>
+    </data>
 </root>

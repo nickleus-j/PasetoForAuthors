@@ -74,5 +74,23 @@ namespace OpineHere.mvc.Resources {
                 return ResourceManager.GetString("Register", resourceCulture);
             }
         }
+        
+        internal static string Logout {
+            get {
+                return ResourceManager.GetString("Logout", resourceCulture);
+            }
+        }
+        
+        internal static string MakePost {
+            get {
+                return ResourceManager.GetString("MakePost", resourceCulture);
+            }
+        }
+        
+        internal static string PasetoSchemeName {
+            get {
+                return ResourceManager.GetString("PasetoSchemeName", resourceCulture);
+            }
+        }
     }
 }

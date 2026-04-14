@@ -2,17 +2,18 @@ using System.Security.Claims;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
-
+using OpineHere.mvc.Resources;
 namespace OpineHere.mvc.Service;
 
 public static class PasetoAuthenticationExtensions
 {
     public static void AddPasetoAuthentication(this IServiceCollection services)
     {
-        services.AddAuthentication("PasetoScheme")
+        services.AddAuthentication(Resources.Resources.PasetoSchemeName)
             .AddScheme<AuthenticationSchemeOptions, PasetoAuthenticationHandler>(
-                "PasetoScheme", options => { });
+                Resources.Resources.PasetoSchemeName, options => { });
     }
+    
 }
 
 public class PasetoAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
@@ -49,11 +50,11 @@ public class PasetoAuthenticationHandler : AuthenticationHandler<AuthenticationS
                         //new Claim(ClaimTypes.NameIdentifier, _authService.GetUserId() ?? ""),
                         new Claim(ClaimTypes.Name, Request.HttpContext.Session.GetString("user_email") ?? ""),
                     },
-                    "PasetoScheme"
+                    Resources.Resources.PasetoSchemeName
                 )
             );
 
-            var ticket = new AuthenticationTicket(principal, "PasetoScheme");
+            var ticket = new AuthenticationTicket(principal, Resources.Resources.PasetoSchemeName);
             return AuthenticateResult.Success(ticket);
         }
         catch (Exception ex)

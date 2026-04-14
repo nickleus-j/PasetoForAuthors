@@ -16,6 +16,7 @@ public class OpineContext: IdentityDbContext
     }
     public virtual DbSet<MarkdownPost> MarkdownPost { get; set; }
     public virtual DbSet<PopularityApproval> PopularityApproval { get; set; }
+    public virtual DbSet<AuthorProfile> AuthorProfile { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -35,5 +36,12 @@ public class OpineContext: IdentityDbContext
             SecurityStamp= "8e445865-0000-aaaa-0000-9443d048cdb9",
             ConcurrencyStamp= "8e445865-0000-aaaa-0000-9443d048cd00"
         });
+        modelBuilder.Entity<AuthorProfile>().HasData(
+            new AuthorProfile
+            {
+                Id = 1,
+                GivenName =  "Default",
+                Surname =  "User",
+            });
     }
 }

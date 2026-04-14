@@ -25,8 +25,14 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@Resources.DefaultAppTitle</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">@Resources.DefaultAppTitle</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">@Resources.Privacy</a>
                     </li>
+                    @if (Context.Items["IsAuthenticated"] is true)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Write" asp-action="Create">@Resources.MakePost</a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
@@ -47,7 +53,7 @@
                     <li>
                         <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
                             <button type="submit" class="btn btn-outline-primary">
-                                <i class="fas fa-sign-out-alt"></i> Logout
+                                <i class="fas fa-sign-out-alt"></i> @Resources.Logout
                             </button>
                         </form>
                     </li>
@@ -57,12 +63,12 @@
                     <!-- Unauthenticated User Section -->
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Account" asp-action="Login">
-                            <i class="fas fa-sign-in-alt"></i> Login
+                            <i class="fas fa-sign-in-alt"></i> @Resources.LogIn
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Account" asp-action="Register">
-                            <i class="fas fa-user-plus"></i> Register
+                            <i class="fas fa-user-plus"></i> @Resources.Register
                         </a>
                     </li>
                 }

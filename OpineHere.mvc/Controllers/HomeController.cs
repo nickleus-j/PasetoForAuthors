@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using OpineHere.Data;
 using OpineHere.Data.entity;
+using OpineHere.mvc.Mapping;
 using OpineHere.mvc.Models;
 
 namespace OpineHere.mvc.Controllers;
@@ -15,8 +16,8 @@ public class HomeController : Controller
     }
     public async Task<IActionResult> Index()
     {
-        
-        return View(await UnitOfWork.MarkdownPostRepo.GetFromPageAsync(1,10,"Title"));
+        var posts = await UnitOfWork.MarkdownPostRepo.GetFromPageAsync(1, 10, "Title");
+        return View(MarkdownPostMapper.ToDto(posts.ToList()));
     }
 
     public IActionResult Privacy()
@@ -42,7 +43,8 @@ public class HomeController : Controller
             return RedirectToAction(nameof(Index));
         }
         return View(post);
-    }    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    }    
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
