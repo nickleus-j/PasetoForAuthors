@@ -92,5 +92,41 @@ namespace OpineHere.mvc.Resources {
                 return ResourceManager.GetString("PasetoSchemeName", resourceCulture);
             }
         }
+        
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        internal static string PublishPost {
+            get {
+                return ResourceManager.GetString("PublishPost", resourceCulture);
+            }
+        }
+        
+        internal static string MarkdownSupportLabel {
+            get {
+                return ResourceManager.GetString("MarkdownSupportLabel", resourceCulture);
+            }
+        }
+        
+        internal static string DraftPost {
+            get {
+                return ResourceManager.GetString("DraftPost", resourceCulture);
+            }
+        }
+        
+        internal static string AuthorLabel {
+            get {
+                return ResourceManager.GetString("AuthorLabel", resourceCulture);
+            }
+        }
+        
+        internal static string WriteThoughts {
+            get {
+                return ResourceManager.GetString("WriteThoughts", resourceCulture);
+            }
+        }
     }
 }

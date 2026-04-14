@@ -25,7 +25,7 @@
         <value>Privacy</value>
     </data>
     <data name="LogIn" xml:space="preserve">
-        <value>Login</value>
+        <value>Log in</value>
     </data>
     <data name="Bulletin" xml:space="preserve">
         <value>Bulletin</value>
@@ -41,5 +41,23 @@
     </data>
     <data name="PasetoSchemeName" xml:space="preserve">
         <value>PasetoBearerScheme</value>
+    </data>
+    <data name="Cancel" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="PublishPost" xml:space="preserve">
+        <value>Publish Post</value>
+    </data>
+    <data name="MarkdownSupportLabel" xml:space="preserve">
+        <value>Supports Markdown</value>
+    </data>
+    <data name="DraftPost" xml:space="preserve">
+        <value>Draft a Post</value>
+    </data>
+    <data name="AuthorLabel" xml:space="preserve">
+        <value>Author</value>
+    </data>
+    <data name="WriteThoughts" xml:space="preserve">
+        <value>Write thoughts here</value>
     </data>
 </root>

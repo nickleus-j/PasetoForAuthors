@@ -1,12 +1,11 @@
-<!-- Views/Account/Login.cshtml -->
 @using OpineHere.mvc.Resources
-@model LoginRequest
+@model RegisterRequest
 
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <h2>@Resources.LogIn</h2>
-            <form asp-action="Login" method="post">
+            <form asp-action="Register" method="post">
                 <div class="form-group">
                     <label asp-for="Email"></label>
                     <input asp-for="Email" class="form-control" />
@@ -17,7 +16,12 @@
                     <input asp-for="Password" type="password" class="form-control" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
-                <button type="submit" class="btn btn-primary">@Resources.LogIn</button>
+                <div class="form-group">
+                    <label asp-for="ConfirmPassword"></label>
+                    <input asp-for="ConfirmPassword" type="password" class="form-control" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">@Resources.Register</button>
             </form>
         </div>
     </div>
