@@ -26,9 +26,10 @@ public class WriteController : Controller
     {
         if (ModelState.IsValid)
         {
-            post.UserId = null;
+            post.UserId = new Guid(HttpContext.Items["UserId"].ToString());
             post.LastUpdate = DateTime.UtcNow;
             post.PostDate = DateTime.UtcNow;
+            post.AuthorName = HttpContext.Items["UserDisplayName"].ToString();
             await UnitOfWork.MarkdownPostRepo.AddAsync(MarkdownPostMapper.ToEntity(post));
             await UnitOfWork.CompleteAsync();
             return RedirectToAction(nameof(Index));
