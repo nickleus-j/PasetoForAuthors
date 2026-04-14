@@ -14,11 +14,12 @@ public class WriteController : Controller
         this.UnitOfWork = unitOfWork;
     }
     // GET
-    [Authorize]
+    [PasetoAuthorize]
     public IActionResult Create()
     {
         return View();
     }
+    [PasetoAuthorize]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(MarkdownPostDto post)

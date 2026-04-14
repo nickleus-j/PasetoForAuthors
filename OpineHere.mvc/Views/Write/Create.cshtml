@@ -1,5 +1,4 @@
-@model OpineHere.mvc.Models.MarkdownPostDto
-
+@model OpineHere.mvc.Models.MarkdownPostDto;
 
 @{
     ViewData["Title"] = "Create New Post";
@@ -12,7 +11,7 @@
             <h2 class="mb-4">Draft Your Story</h2>
             <hr />
 
-            <form asp-action="Create" method="post">
+            <form asp-action="AnnonymousPost" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 @* Title Section *@
@@ -28,7 +27,8 @@
                         <label class="form-label fw-bold mb-3">Author Identity</label>
                         <div id="penNameSection" class="mt-3">
                             <label asp-for="AuthorName" class="form-label"></label>
-                            <strong>@Model.AuthorName</strong>
+                            <input asp-for="AuthorName" class="form-control" placeholder="What should we call you?" />
+                            <span asp-validation-for="AuthorName" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
