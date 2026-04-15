@@ -18,4 +18,6 @@ public class RegisterRequest
     [Required(ErrorMessage = "Password confirmation is required")]
     [Compare("Password", ErrorMessage = "Passwords do not match")]
     public string ConfirmPassword { get; set; }
+    public string GivenName { get; set; }
+    public string Surname { get; set; }
 }

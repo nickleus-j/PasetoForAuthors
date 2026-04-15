@@ -4,6 +4,8 @@ using OpineHere.Identity.Authentication;
 using OpineHere.Identity.Service;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using OpineHere.Data;
+
 namespace OpineHere.Identity.Controllers;
 
 [ApiController]
@@ -13,15 +15,18 @@ public class PasetoController : Controller
     private readonly UserManager<IdentityUser> _userManager;
     private readonly ITokenService _tokenService;
     private readonly ILogger<PasetoController> _logger;
+    private IDataUnitOfWork _unitOfWork;
 
     public PasetoController(
         UserManager<IdentityUser> userManager,
         ITokenService tokenService, 
+        IDataUnitOfWork unitOfWork,
         ILogger<PasetoController> logger)
     {
         _userManager = userManager;
         _tokenService = tokenService;
         _logger = logger;
+        _unitOfWork = unitOfWork;
     }
     [HttpGet]
     public IActionResult Index()
@@ -58,7 +63,7 @@ public class PasetoController : Controller
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);
-
+            
             if (!result.Succeeded)
             {
                 var errors = string.Join(", ", result.Errors.Select(e => e.Description));
@@ -68,7 +73,9 @@ public class PasetoController : Controller
                     errors = result.Errors.Select(e => e.Description)
                 });
             }
-
+            
+            await _unitOfWork.AuthorProfileRepo.RegisterNewUserAsAuthorAsync(user.Id, request.GivenName,
+                request.Surname);
             _logger.LogInformation($"User registered successfully: {request.Email}");
 
             return Ok(new

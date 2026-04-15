@@ -40,6 +40,7 @@ public class OpineContext: IdentityDbContext
             new AuthorProfile
             {
                 Id = 1,
+                UserId =new Guid(userIds[0]),
                 GivenName =  "Default",
                 Surname =  "User",
             });

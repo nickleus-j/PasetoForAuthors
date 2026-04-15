@@ -8,4 +8,5 @@ public interface IDataUnitOfWork
     void Dispose();
     Task<int> CompleteAsync();
     IMarkdownPostRepo MarkdownPostRepo { get; }
+    IAuthorProfileRepo AuthorProfileRepo { get; }
 }

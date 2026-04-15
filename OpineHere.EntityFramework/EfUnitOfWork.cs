@@ -11,10 +11,12 @@ public class EfUnitOfWork: IDataUnitOfWork
 {
     private readonly OpineContext _context;
     public IMarkdownPostRepo MarkdownPostRepo{ get; private set; }
+    public IAuthorProfileRepo AuthorProfileRepo { get; private set; }
     public EfUnitOfWork(OpineContext context)
     {
         _context = context;
         MarkdownPostRepo = new MarkdownPostRepo(_context);
+        AuthorProfileRepo = new AuthorProfileRepo(_context);
     }
     public void Dispose()
     {

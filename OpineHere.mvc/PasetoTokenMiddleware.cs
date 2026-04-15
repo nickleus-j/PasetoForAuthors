@@ -1,3 +1,4 @@
+using OpineHere.Data;
 using OpineHere.mvc.Service;
 
 namespace OpineHere.mvc;
@@ -13,7 +14,7 @@ public class PasetoTokenMiddleware
         _logger = logger;
     }
 
-    public async Task InvokeAsync(HttpContext context, IAuthService authService)
+    public async Task InvokeAsync(HttpContext context, IAuthService authService,IDataUnitOfWork unitOfWork)
     {
         var token = authService.GetToken();
         
@@ -24,8 +25,8 @@ public class PasetoTokenMiddleware
             try
             {
                 // Extract user information from token claims
-                var userDisplayName = ExtractUserDisplayName(token);
                 var userId = authService.GetUserId();
+                var userDisplayName = await ExtractUserDisplayName(userId, unitOfWork);
                 
                 context.Items["PasetoToken"] = token;
                 context.Items["UserDisplayName"] = userDisplayName;
@@ -47,20 +48,17 @@ public class PasetoTokenMiddleware
         await _next(context);
     }
 
-    private string ExtractUserDisplayName(string token)
+    private async Task<string> ExtractUserDisplayName(string userId,IDataUnitOfWork unitOfWork)
     {
-        // If using Paseto v4, you'll need to parse the token
-        // This is a simplified example - adjust based on your token structure
+        
         try
         {
-            // Note: Paseto tokens are encrypted, so you need proper decryption keys
-            // This example assumes you store the user email/name in claims during creation
-            // You may need to call the API to validate and decode the token
-            return "User"; // Fallback display name
+            var user=await unitOfWork.AuthorProfileRepo.GetProfileAsync(userId);
+            return user.GivenName + " " + user.Surname;
         }
         catch
         {
-            return "User";
+            return "User"; // Fallback display name
         }
     }
 }

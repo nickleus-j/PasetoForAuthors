@@ -12,4 +12,6 @@ public class AuthorProfile
     [MinLength(1)]
     [Display(Name = "Last Name")]
     public string Surname{get; set;}
+    [Display(Name = "User ID")]
+    public Guid UserId { get; set; }
 }
