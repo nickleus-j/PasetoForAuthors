@@ -32,7 +32,7 @@ public class WriteController : Controller
             post.AuthorName = HttpContext.Items["UserDisplayName"].ToString();
             await UnitOfWork.MarkdownPostRepo.AddAsync(MarkdownPostMapper.ToEntity(post));
             await UnitOfWork.CompleteAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Home");
         }
         return RedirectToAction("Index", "Home");
     }    
