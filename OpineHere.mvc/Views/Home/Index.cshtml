@@ -11,7 +11,7 @@
 {
     <div class="card mb-4 bg-light">
         <div class="card-header">
-            <label class="form-label fw-bold mb-3">@post.Title</label>
+            <a class="form-label fw-bold mb-3" asp-action="leer" asp-controller="Write" asp-route-id="@post.Id">@post.Title</a>
         </div>
         <div class="card-body">
             <div id="penNameSection" class="mt-3">

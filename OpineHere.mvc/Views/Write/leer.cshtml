@@ -1,0 +1,20 @@
+@model MarkdownPostDto
+
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "_Layout";
+}
+
+<h2>@Model.Title</h2>
+<i>@Model.AuthorName</i>
+<div class="row justify-content-end">
+    <pre class="col-sm-10 mark-content" id="content">
+        
+    </pre>
+</div>
+@section Scripts{
+    <script src="~/lib/marked.js"></script>
+    <script language="JavaScript">
+        document.getElementById('content').innerHTML = marked.parse('@Model.RawContent');
+    </script>
+}

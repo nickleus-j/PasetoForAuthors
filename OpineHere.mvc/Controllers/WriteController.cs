@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using OpineHere.Data;
 using OpineHere.mvc.Mapping;
 using OpineHere.mvc.Models;
+using OpineHere.mvc.Service;
 
 namespace OpineHere.mvc.Controllers;
 
@@ -12,6 +13,11 @@ public class WriteController : Controller
     public WriteController(IDataUnitOfWork unitOfWork)
     {
         this.UnitOfWork = unitOfWork;
+    }
+    public async Task<IActionResult> leer(string id)
+    {
+        MarkedDownPostService markedDownPostService = new MarkedDownPostService(UnitOfWork);
+        return View(await markedDownPostService.GetPostAsync(id));
     }
     // GET
     [PasetoAuthorize]
