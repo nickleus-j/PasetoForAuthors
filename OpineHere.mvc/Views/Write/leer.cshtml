@@ -1,3 +1,4 @@
+@using OpineHere.mvc.Service;
 @model MarkdownPostDto
 
 @{
@@ -7,14 +8,11 @@
 
 <h2>@Model.Title</h2>
 <i>@Model.AuthorName</i>
-<div class="row justify-content-end">
-    <pre class="col-sm-10 mark-content" id="content">
-        
-    </pre>
+<div class="row">
+    <div class="col-sm-10 markdown-container justify-content-end" id="content">
+        @Html.Raw(MarkdownService.MarkdownToHtml( Model.RawContent))
+    </div>
 </div>
 @section Scripts{
-    <script src="~/lib/marked.js"></script>
-    <script language="JavaScript">
-        document.getElementById('content').innerHTML = marked.parse('@Model.RawContent');
-    </script>
+    
 }

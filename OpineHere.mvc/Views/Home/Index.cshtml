@@ -1,4 +1,5 @@
 ﻿@using OpineHere.mvc.Resources
+@using OpineHere.mvc.Service
 @model IEnumerable<OpineHere.mvc.Models.MarkdownPostDto>
 @{
     ViewData["Title"] = Resources.Bulletin;
@@ -15,7 +16,7 @@
         </div>
         <div class="card-body">
             <div id="penNameSection" class="mt-3">
-                @post.RawContent
+                @Html.Raw(MarkdownService.MarkdownToHtml( post.RawContent))
             </div>
         </div>
     </div>

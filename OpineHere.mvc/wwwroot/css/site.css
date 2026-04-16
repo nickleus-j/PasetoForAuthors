@@ -18,7 +18,7 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+  margin-bottom: 10px;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
@@ -28,4 +28,8 @@ body {
 
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
+}
+.markdown-container {
+  background: #FDECC9;
+  box-shadow: #888 8px 7px 5px 3px;
 }
