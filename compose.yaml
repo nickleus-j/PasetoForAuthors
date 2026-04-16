@@ -40,5 +40,21 @@ services:
     ports:
       - "5100:8080"
     #http://localhost:5100/api/Identity/me
+    
+  opinehere:
+      build:
+        context: .
+        dockerfile: OpineHere.mvc/Dockerfile
+      container_name: opinemvc
+      depends_on:
+        db:
+          condition: service_healthy
+      environment:
+        ConnectionStrings__DefaultConnection: "Server=mysql_db;Port=3306;Database=${DB_NAME};Uid=default;Pwd=${USER_PASSWORD};"
+        DefaultUserPassword: ${USER_PASSWORD}
+        dockerfile: OpineHere.mvc/Dockerfile
+      ports:
+        - "5001:8080"
+      #http://localhost:5001/
 volumes:
   mysql_data:

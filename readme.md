@@ -2,7 +2,7 @@
 
 PasetoForAuthors is a modern ASP.NET 10 MVC application designed to demonstrate secure authentication using **PASETO (Platform-Agnostic Security Tokens)**. Unlike JWTs, PASETOs are designed to be "cryptographically resilient," eliminating common vulnerabilities like the "none" algorithm or key-confusion attacks.
 
-This project serves as a reference implementation for developers looking to integrate PASETO into .NET web applications with a focus on Clean Architecture and modern security standards.
+This project serves as a reference implementation for developers looking to integrate PASETO into .NET web applications. An identity service will integrate with other services.
 
 ## 🚀 Features
 
@@ -36,8 +36,7 @@ docker-compose up -d --build
 
 Once the containers are running, the MVC application will be accessible at:
 
-  - **HTTP**: `http://localhost:5000`
-  - **HTTPS**: `https://localhost:5001`
+  - **HTTP**: `https://localhost:5001`
 
 > **Note**: If the MVC app does not start as expected, ensure the `ENTRYPOINT` in your `Dockerfile` matches the assembly name (e.g., `ENTRYPOINT ["dotnet", "PasetoForAuthors.dll"]`) and that the ports in `docker-compose.yml` are not already in use.
 
