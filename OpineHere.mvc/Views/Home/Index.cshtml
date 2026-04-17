@@ -4,20 +4,21 @@
 @{
     ViewData["Title"] = Resources.Bulletin;
 }
-
 <div class="text-center">
     <h1 class="display-4">@ViewData["Title"]</h1>
 </div>
-@foreach (var post in Model)
-{
-    <div class="card mb-4 bg-light">
-        <div class="card-header">
-            <a class="form-label fw-bold mb-3" asp-action="leer" asp-controller="Write" asp-route-id="@post.Id">@post.Title</a>
-        </div>
-        <div class="card-body">
-            <div id="penNameSection" class="mt-3">
-                @Html.Raw(MarkdownService.MarkdownToHtml( post.RawContent))
+<div class="row">
+    @foreach (var post in Model)
+    {
+        <div class="card mb-4 bg-light col-md-6 col-lg-4">
+            <div class="card-header">
+                <a class="form-label fw-bold mb-3" asp-action="leer" asp-controller="Write" asp-route-id="@post.Id">@post.Title</a>
+            </div>
+            <div class="card-body">
+                <div id="penNameSection" class="mt-3">
+                    @Html.Raw(MarkdownService.MarkdownToHtml( post.RawContent))
+                </div>
             </div>
         </div>
-    </div>
-}
+    }
+</div>

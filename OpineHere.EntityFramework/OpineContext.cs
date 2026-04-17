@@ -45,4 +45,16 @@ public class OpineContext: IdentityDbContext
                 Surname =  "User",
             });
     }
+    public void HashUserPasswordsIfNeeded(string defaultPassword= "aPassword123!")
+    {
+        var hasher = new PasswordHasher<string>();
+        foreach (var user in Users)
+        {
+            if (string.IsNullOrEmpty(user.PasswordHash) || user.PasswordHash.Length<15)
+            {
+                user.PasswordHash = hasher.HashPassword(user.UserName, defaultPassword);
+            }
+        }
+        SaveChanges();
+    }
 }
