@@ -41,8 +41,6 @@ services:
       - "5100:8080"
     expose:
       - "5100"
-    volumes:
-      - dataprotection-keys:/root/.aspnet/DataProtection-Keys
     #http://localhost:5100/api/Identity/me
     
   opinehere:
@@ -60,9 +58,6 @@ services:
         dockerfile: OpineHere.mvc/Dockerfile
       ports:
         - "5001:8080"
-      volumes:
-      - dataprotection-keys:/root/.aspnet/DataProtection-Keys
       #http://localhost:5001/
 volumes:
   mysql_data:
-  dataprotection-keys:

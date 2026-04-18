@@ -78,9 +78,15 @@ public class PasetoController : Controller
                 request.Surname);
             _logger.LogInformation($"User registered successfully: {request.Email}");
 
-            return Ok(new
+            var token = _tokenService.GenerateToken(user.Id, request.Email);
+
+            _logger.LogInformation($"User logged in successfully: {request.Email}");
+
+            return Ok(new AuthResponse
             {
-                message = "User registered successfully",
+                token=token,
+                expiresIn = "1h",
+                tokenType = "Bearer",
                 userId = user.Id,
                 email = user.Email
             });
