@@ -21,8 +21,8 @@ This project serves as a reference implementation for developers looking to inte
 The application is containerized for easy deployment. You can spin up the environment using Docker Compose.
 
 ### 1\. Configure the Environment
-
-The `docker-compose.yml` file handles the orchestration. Ensure your environment variables for token secrets are configured correctly in your `appsettings.json` or as environment overrides.
+- Please make a .env file. There is a sample .env.txt file for reference. Do not need to use the same password
+- The `docker-compose.yml` file handles the orchestration. Ensure your environment variables for token secrets are configured correctly in your `appsettings.json` or as environment overrides.
 
 ### 2\. Run the Application
 

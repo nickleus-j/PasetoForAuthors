@@ -7,7 +7,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace OpineHere.mvc.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -57,11 +57,28 @@ namespace OpineHere.mvc.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "AuthorProfile",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    GivenName = table.Column<string>(type: "longtext", nullable: false),
+                    Surname = table.Column<string>(type: "longtext", nullable: false),
+                    UserId = table.Column<Guid>(type: "char(36)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuthorProfile", x => x.Id);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "MarkdownPost",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
                     Content = table.Column<string>(type: "longtext", nullable: false),
+                    Title = table.Column<string>(type: "longtext", nullable: false),
                     UserId = table.Column<Guid>(type: "char(36)", nullable: true),
                     PenName = table.Column<string>(type: "longtext", nullable: true),
                     PostDate = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
@@ -70,6 +87,23 @@ namespace OpineHere.mvc.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MarkdownPost", x => x.Id);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "PopularityApproval",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    IsApproved = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    inUse = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    PostId = table.Column<Guid>(type: "char(40)", maxLength: 40, nullable: false),
+                    UserId = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PopularityApproval", x => x.Id);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -194,6 +228,11 @@ namespace OpineHere.mvc.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[] { "8e445800-0000-4543-0000-9443d048cdb9", 0, "8e445865-0000-aaaa-0000-9443d048cd00", "primary@default.co", false, false, null, "PRIMARY@DEFAULT.CO", "PRIMARY@DEFAULT.CO", "aPassword123!", null, false, "8e445865-0000-aaaa-0000-9443d048cdb9", false, "primary@default.co" });
 
+            migrationBuilder.InsertData(
+                table: "AuthorProfile",
+                columns: new[] { "Id", "GivenName", "Surname", "UserId" },
+                values: new object[] { 1, "Default", "User", new Guid("8e445800-0000-4543-0000-9443d048cdb9") });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -251,7 +290,13 @@ namespace OpineHere.mvc.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "AuthorProfile");
+
+            migrationBuilder.DropTable(
                 name: "MarkdownPost");
+
+            migrationBuilder.DropTable(
+                name: "PopularityApproval");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

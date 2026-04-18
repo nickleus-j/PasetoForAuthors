@@ -265,7 +265,7 @@ namespace OpineHere.mvc.Migrations
                             Id = 1,
                             GivenName = "Default",
                             Surname = "User",
-                            UserId = new Guid("00000000-0000-0000-0000-000000000000")
+                            UserId = new Guid("8e445800-0000-4543-0000-9443d048cdb9")
                         });
                 });
 

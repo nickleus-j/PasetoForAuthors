@@ -39,6 +39,10 @@ services:
       dockerfile: OpineHere.Identity/Dockerfile
     ports:
       - "5100:8080"
+    expose:
+      - "5100"
+    volumes:
+      - dataprotection-keys:/root/.aspnet/DataProtection-Keys
     #http://localhost:5100/api/Identity/me
     
   opinehere:
@@ -52,9 +56,13 @@ services:
       environment:
         ConnectionStrings__DefaultConnection: "Server=mysql_db;Port=3306;Database=${DB_NAME};Uid=default;Pwd=${USER_PASSWORD};"
         DefaultUserPassword: ${USER_PASSWORD}
+        ASPNETCORE_ENVIRONMENT: Docker
         dockerfile: OpineHere.mvc/Dockerfile
       ports:
         - "5001:8080"
+      volumes:
+      - dataprotection-keys:/root/.aspnet/DataProtection-Keys
       #http://localhost:5001/
 volumes:
   mysql_data:
+  dataprotection-keys:

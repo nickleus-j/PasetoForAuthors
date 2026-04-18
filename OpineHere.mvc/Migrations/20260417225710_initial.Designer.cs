@@ -11,8 +11,8 @@ using OpineHere.EntityFramework;
 namespace OpineHere.mvc.Migrations
 {
     [DbContext(typeof(OpineContext))]
-    [Migration("20260409151445_Approving")]
-    partial class Approving
+    [Migration("20260417225710_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -241,6 +241,37 @@ namespace OpineHere.mvc.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("OpineHere.Data.entity.AuthorProfile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("GivenName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AuthorProfile");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            GivenName = "Default",
+                            Surname = "User",
+                            UserId = new Guid("8e445800-0000-4543-0000-9443d048cdb9")
+                        });
+                });
+
             modelBuilder.Entity("OpineHere.Data.entity.MarkdownPost", b =>
                 {
                     b.Property<Guid>("Id")
@@ -270,6 +301,32 @@ namespace OpineHere.mvc.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MarkdownPost");
+                });
+
+            modelBuilder.Entity("OpineHere.Data.entity.PopularityApproval", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<Guid>("PostId")
+                        .HasMaxLength(40)
+                        .HasColumnType("char(40)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("varchar(40)");
+
+                    b.Property<bool>("inUse")
+                        .HasColumnType("tinyint(1)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PopularityApproval");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
