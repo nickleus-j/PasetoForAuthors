@@ -40,6 +40,13 @@ Once the containers are running, the MVC application will be accessible at:
 
 > **Note**: If the MVC app does not start as expected, ensure the `ENTRYPOINT` in your `Dockerfile` matches the assembly name (e.g., `ENTRYPOINT ["dotnet", "PasetoForAuthors.dll"]`) and that the ports in `docker-compose.yml` are not already in use.
 
+## Redeployment
+- Delete existing images. Remove mysql volume if data changes are needed.
+- Run  command
+```bash
+docker-compose up -d --build
+```
+
 ## 📁 Project Structure
 
   - `/src`: Contains the primary MVC project and PASETO logic.
