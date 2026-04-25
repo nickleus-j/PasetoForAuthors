@@ -28,6 +28,6 @@ public class MarkdownPostRepo:EfRepository<MarkdownPost>,IMarkdownPostRepo
 
     public async Task<IList<MarkdownPost>> GetPostsWithPenName(string penName)
     {
-        return await context.MarkdownPost.Where(p => p.PenName == penName).ToListAsync();
+        return await context.MarkdownPost.Where(p => p.PenName == penName).OrderByDescending(p=>p.LastUpdate).ToListAsync();
     }
 }

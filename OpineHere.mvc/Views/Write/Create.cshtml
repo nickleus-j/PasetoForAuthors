@@ -46,9 +46,45 @@
 
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-5">
                     <a asp-action="Index" class="btn btn-outline-secondary px-4">@Resources.Cancel</a>
+                    <a class="btn btn-secondary" onclick="preview()">@Resources.Preview</a>
                     <button type="submit" class="btn btn-primary px-5">@Resources.PublishPost</button>
                 </div>
             </form>
         </div>
     </div>
+    <div id="preview-panel">
+        
+    </div>
 </div>
+@section Scripts
+{
+    <script src="../js/WebCaller.js"></script>
+    <script>
+        async function loadContent() {
+            try {
+                const content = document.querySelector("#RawContent").value;
+                const response = await fetch('/Write/preview/?markdownString='+content);
+
+                if (response.ok) {
+                    const htmlString = await response.text();
+                    const targetElement = document.getElementById('preview-panel');
+                    targetElement.innerHTML=htmlString;
+                }
+            } catch (error) {
+                console.error('Error fetching HTML:', error);
+            }
+        }
+        async function preview(){
+            try {
+                let wCaller=new WebCaller();
+                const content = document.querySelector("#RawContent").value;
+                await wCaller.get('/Write/preview/',{"markdownString":content}).then( function (result) {
+                    const targetElement = document.getElementById('preview-panel');
+                    targetElement.innerHTML= result.htmlString; 
+                });
+            } catch (error) {
+                console.error('Error fetching HTML:', error);
+            }
+        }
+    </script>
+}

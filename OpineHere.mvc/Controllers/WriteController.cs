@@ -19,6 +19,10 @@ public class WriteController : Controller
         MarkedDownPostService markedDownPostService = new MarkedDownPostService(UnitOfWork);
         return View(await markedDownPostService.GetPostAsync(id));
     }
+    public IActionResult preview(string markdownString)
+    {
+        return Json(new { htmlString=MarkdownService.MarkdownToHtml(markdownString)});
+    }
     // GET
     [PasetoAuthorize]
     public IActionResult Create()

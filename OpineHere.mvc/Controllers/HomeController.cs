@@ -16,7 +16,7 @@ public class HomeController : Controller
     }
     public async Task<IActionResult> Index()
     {
-        var posts = await UnitOfWork.MarkdownPostRepo.GetFromPageAsync(1, 10, "Title");
+        var posts = await UnitOfWork.MarkdownPostRepo.GetFromPageAsync(1, 10, "LastUpdate","desc");
         return View(MarkdownPostMapper.ToDto(posts.ToList()));
     }
 

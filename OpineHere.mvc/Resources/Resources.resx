@@ -60,4 +60,7 @@
     <data name="WriteThoughts" xml:space="preserve">
         <value>Write thoughts here</value>
     </data>
+    <data name="Preview" xml:space="preserve">
+        <value>Preview</value>
+    </data>
 </root>

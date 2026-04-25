@@ -128,5 +128,11 @@ namespace OpineHere.mvc.Resources {
                 return ResourceManager.GetString("WriteThoughts", resourceCulture);
             }
         }
+        
+        internal static string Preview {
+            get {
+                return ResourceManager.GetString("Preview", resourceCulture);
+            }
+        }
     }
 }

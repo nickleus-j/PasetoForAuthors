@@ -2,12 +2,6 @@ html {
   font-size: 14px;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
@@ -20,7 +14,9 @@ html {
 body {
   margin-bottom: 30px;
 }
-
+.primary-content {
+  margin: 10% 5%;
+}
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
   color: var(--bs-secondary-color);
   text-align: end;
@@ -29,7 +25,28 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+.article-header{
+  background-color: #baccb8;
+}
 .markdown-container {
   background: #FDECC9;
   box-shadow: #888 8px 7px 5px 3px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+  .primary-content {
+    margin: 8% 3%;
+  }
+}
+@media (min-width: 1200px) {
+  .primary-content {
+    margin: 5% 4%;
+  }
+}
+@media (min-width: 1800px) {
+  .primary-content {
+    margin: 2.5% 3%;
+  }
 }
