@@ -16,7 +16,7 @@ public class MarkedDownPostService
     public async Task<MarkdownPostDto> GetPostAsync(string id)
     {
         Guid guid = Guid.Parse(id);
-        var post=await unitOfWork.MarkdownPostRepo.SingleAsync(p => p.Id == guid);
+        var post= await unitOfWork.MarkdownPostRepo.SingleAsync(p => p.Id == guid);
         return MarkdownPostMapper.ToDto(post);
     }
 }

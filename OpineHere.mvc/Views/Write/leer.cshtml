@@ -8,14 +8,13 @@
 <div class="row">
     <div class="col-sm-10 article-header">
         <h2>@Model.Title</h2>
-        <i>@Model.AuthorName</i>
         @Html.ActionLink(
             Model.AuthorName,
             "Index",                                    // actionName
             "Author",                                                   // routeValues
             new {                                                     // htmlAttributes
                 penName = Model.AuthorName
-            }
+            },new {@class="btn btn-info"}
         )
     </div>
 </div>

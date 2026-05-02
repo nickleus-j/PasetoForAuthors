@@ -17,4 +17,9 @@ public class AuthorController : Controller
         var posts = await UnitOfWork.MarkdownPostRepo.GetPostsWithPenName(penName);
         return View(MarkdownPostMapper.ToDto(posts));
     }
+    public async Task<IActionResult> Profile(string authorId)
+    {
+        var author = await UnitOfWork.AuthorProfileRepo.GetProfileAsync(authorId);
+        return PartialView(AuthorProfileMapper.ToDto(author));
+    }
 }

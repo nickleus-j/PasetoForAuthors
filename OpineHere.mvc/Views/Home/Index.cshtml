@@ -15,8 +15,16 @@
                 <a class="form-label fw-bold mb-3" asp-action="leer" asp-controller="Write" asp-route-id="@post.Id">@post.Title</a>
             </div>
             <div class="card-body">
+                @Html.ActionLink(
+                    post.AuthorName,
+                    "Index",                                    // actionName
+                    "Author",                                                   // routeValues
+                    new {                                                     // htmlAttributes
+                        penName = post.AuthorName
+                    },new {@class="btn btn-info"}
+                )
                 <div id="penNameSection" class="mt-3">
-                    @Html.Raw(MarkdownService.MarkdownToHtml( post.RawContent))
+                    @Html.Raw(MarkdownService.MarkdownToHtml(post.RawContent))
                 </div>
             </div>
         </div>
