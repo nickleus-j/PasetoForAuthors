@@ -27,6 +27,7 @@ body {
 }
 .article-header{
   background-color: #baccb8;
+  padding-bottom: 12px;
 }
 .markdown-container {
   background: #FDECC9;
