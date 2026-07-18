@@ -14,6 +14,8 @@ public class MarkdownPostDto
     public Guid? UserId { get; set; }
 
     [DisplayName("Author")]
+    [MinLength(1)]
+    [Required(ErrorMessage = "Author or Pen Name is required")]
     public string? AuthorName { get; set; }
 
     public DateTimeOffset PostDate { get; set; } = DateTimeOffset.UtcNow;

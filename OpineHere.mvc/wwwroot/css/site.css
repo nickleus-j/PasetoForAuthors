@@ -33,6 +33,10 @@ body {
   background: #FDECC9;
   box-shadow: #888 8px 7px 5px 3px;
 }
+.card-body{
+  max-height: 400px;
+  overflow-y: hidden;
+}
 @media (min-width: 768px) {
   html {
     font-size: 16px;

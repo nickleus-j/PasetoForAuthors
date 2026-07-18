@@ -28,7 +28,7 @@
                         <label class="form-label fw-bold mb-3">@Resources.AuthorLabel</label>
                         <div id="penNameSection" class="mt-3">
                             <label asp-for="PenName" class="form-label"></label>
-                            <input asp-for="PenName" class="form-control" placeholder="What should we call you?" />
+                            <input asp-for="PenName" class="form-control" placeholder="What should we call you?" required="required" />
                             <span asp-validation-for="PenName" class="text-danger"></span>
                         </div>
                     </div>

@@ -17,9 +17,9 @@
             <div class="card-body">
                 @Html.ActionLink(
                     post.AuthorName,
-                    "Index",                                    // actionName
-                    "Author",                                                   // routeValues
-                    new {                                                     // htmlAttributes
+                    "Index",       
+                    "Author",  
+                    new {   
                         penName = post.AuthorName
                     },new {@class="btn btn-info"}
                 )

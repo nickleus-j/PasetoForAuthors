@@ -21,7 +21,7 @@ public class AccountController : Controller
         if (User.Identity?.IsAuthenticated == true)
             return RedirectToAction("Index", "Home");
 
-        return View(new RegisterRequest());
+        return View(new RegisterRequest(){GivenName = "",Email = "",Password = ""});
     }
 
     [HttpPost]
