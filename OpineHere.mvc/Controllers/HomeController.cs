@@ -19,6 +19,11 @@ public class HomeController : Controller
         var posts = await UnitOfWork.MarkdownPostRepo.GetFromPageAsync(1, 10, "LastUpdate","desc");
         return View(MarkdownPostMapper.ToDto(posts.ToList()));
     }
+    public async Task<IActionResult> Articles(int page, int pageSize)
+    {
+        var posts = await UnitOfWork.MarkdownPostRepo.GetFromPageAsync(page, pageSize, "LastUpdate","desc");
+        return PartialView(MarkdownPostMapper.ToDto(posts.ToList()));
+    }
 
     public IActionResult Privacy()
     {
@@ -33,6 +38,10 @@ public class HomeController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> AnnonymousPost(MarkdownPost post)
     {
+        if (String.IsNullOrWhiteSpace(post.PenName))
+        {
+            post.PenName = "";
+        }
         if (ModelState.IsValid)
         {
             post.UserId = null;

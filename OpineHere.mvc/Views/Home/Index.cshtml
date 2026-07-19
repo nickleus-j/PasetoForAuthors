@@ -7,7 +7,7 @@
 <div class="text-center">
     <h1 class="display-4">@ViewData["Title"]</h1>
 </div>
-<div class="row">
+<div class="row cards-row">
     @foreach (var post in Model)
     {
         <div class="card mb-4 bg-light col-md-6 col-lg-4">
@@ -30,3 +30,43 @@
         </div>
     }
 </div>
+<div class="details">
+    <sub>Page <span class="page-number">1</span></sub>
+    <span class="article-count">@Model.Count()</span>
+</div>
+@section Scripts
+{
+    <script src="../js/WebCaller.js"></script>
+    <script>
+        function updateStats(currentPage) {
+            let pageNumberElem=document.querySelector(".page-number");
+            let articleCountElem=document.querySelector(".article-count");
+            let cards=document.querySelectorAll(".card");
+            pageNumberElem.innerText=(currentPage).toString();
+            articleCountElem.innerText=(cards.length).toString();
+        }
+        async function loadNextArticles(pageNumber,size) {
+            try {
+                const response = await fetch(`/Home/Articles/?page=${pageNumber}&pageSize=${size}`);
+
+                if (!response.ok) throw new Error('Failed to fetch data');
+
+                const targetElement = document.querySelector(".cards-row");
+                const html = await response.text();
+                targetElement.insertAdjacentHTML('beforeend',html);
+                updateStats(pageNumber);
+                let cards=document.querySelectorAll(".card");
+                if((pageNumber)*size === cards.length){
+                    setTimeout(() => {loadNextArticles(pageNumber+1,10)}, 500);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+        let articleCount=@Model.Count();
+        if(articleCount>=10){
+            setTimeout(() => {loadNextArticles(2,10)}, 300);
+        }
+        
+    </script>
+}
