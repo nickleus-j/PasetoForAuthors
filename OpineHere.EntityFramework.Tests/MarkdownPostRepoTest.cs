@@ -90,7 +90,35 @@ public class MarkdownPostRepoTest
             Assert.Equal(2, results.Count);
             Assert.All(results, post => Assert.Equal("CodeWizard", post.PenName));
         }
+        [Fact]
+        public async Task GetPostsWithPenName_ReturnsOnlyPostsMatchingTheGivenPenNamePagination()
+        {
+            // Arrange
+            var dbName = Guid.NewGuid().ToString();
+            using var context = GetInMemoryContext(dbName);
+            
+            // Seed the in-memory database
+            context.MarkdownPost.AddRange(
+                new MarkdownPost { PenName = "CodeWizard", Title = "Post 1", Content = "Body 1" },
+                new MarkdownPost { PenName = "CodeWizard", Title = "Post 2", Content = "Body 2" },
+                new MarkdownPost { PenName = "CodeWizard", Title = "Post 3", Content = "Body 3" },
+                new MarkdownPost { PenName = "TechMage", Title = "Post 4", Content = "Body 4" },
+                new MarkdownPost { PenName = "TechMage", Title = "Post 5", Content = "Body 5" }
+            );
+            await context.SaveChangesAsync();
 
+            var repo = new MarkdownPostRepo(context);
+
+            // Act
+            var results = await repo.GetPostsWithPenName("CodeWizard",1,2);
+
+            // Assert
+            Assert.Equal(2, results.Count);
+            Assert.All(results, post => Assert.Equal("CodeWizard", post.PenName));
+            
+            results = await repo.GetPostsWithPenName("CodeWizard",2,2);
+            Assert.Single(results);
+        }
         [Fact]
         public async Task GetPostsWithPenName_ReturnsEmptyList_WhenNoMatchesExist()
         {
@@ -110,5 +138,32 @@ public class MarkdownPostRepoTest
             // Assert
             Assert.NotNull(results);
             Assert.Empty(results);
+        }
+        
+        [Fact]
+        public async Task HasMorePost_ReturnsTrue_WhenHasMorePost()
+        {
+            // Arrange
+            var dbName = Guid.NewGuid().ToString();
+            using var context = GetInMemoryContext(dbName);
+            
+            // Seed the in-memory database
+            context.MarkdownPost.AddRange(
+                new MarkdownPost { PenName = "CodeWizard", Title = "Post 1", Content = "Body 1" },
+                new MarkdownPost { PenName = "CodeWizard", Title = "Post 2", Content = "Body 2" },
+                new MarkdownPost { PenName = "CodeWizard", Title = "Post 3", Content = "Body 3" },
+                new MarkdownPost { PenName = "TechMage", Title = "Post 4", Content = "Body 4" },
+                new MarkdownPost { PenName = "TechMage", Title = "Post 5", Content = "Body 5" }
+            );
+            await context.SaveChangesAsync();
+
+            var repo = new MarkdownPostRepo(context);
+
+            // Act
+            bool result = await repo.HasMorePost(2, 3);
+            // Assert
+            Assert.True(result);
+            result = await repo.HasMorePost(3, 3);
+            Assert.False(result);
         }
 }

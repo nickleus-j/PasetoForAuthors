@@ -5,4 +5,6 @@ public interface IMarkdownPostRepo:IRepository<MarkdownPost>
 {
     Task PenNamePost(string PenName, string body,string title="A Post");
     Task<IList<MarkdownPost>> GetPostsWithPenName(string penName);
+    Task<IList<MarkdownPost>> GetPostsWithPenName(string penName,int page, int pageSize=10);
+    Task<bool> HasMorePost(int page, int pageSize);
 }

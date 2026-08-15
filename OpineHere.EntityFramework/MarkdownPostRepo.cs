@@ -30,4 +30,18 @@ public class MarkdownPostRepo:EfRepository<MarkdownPost>,IMarkdownPostRepo
     {
         return await context.MarkdownPost.Where(p => p.PenName == penName).OrderByDescending(p=>p.LastUpdate).ToListAsync();
     }
+
+    public async Task<IList<MarkdownPost>> GetPostsWithPenName(string penName, int page, int pageSize = 10)
+    {
+        return await context.MarkdownPost.Where(p => p.PenName == penName)
+            .OrderByDescending(p=>p.LastUpdate)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize).ToListAsync();
+    }
+
+    public async Task<bool> HasMorePost(int page, int pageSize)
+    {
+        var posts = await GetFromPageAsync(page, pageSize, "LastUpdate","desc");
+        return posts.Any();
+    }
 }
