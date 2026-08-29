@@ -61,7 +61,24 @@ builder.Services.AddAuthentication()
     .AddScheme<AuthenticationSchemeOptions, PasetoBearerHandler>(
         "PasetoBearerScheme", 
         options => { });
+builder.Services.Configure<MailtrapSettings>(builder.Configuration.GetSection("Mailtrap"));
+builder.Services.AddHttpClient<MailtrapEmailSender>();
+builder.Services.AddTransient<IEmailSender, MailtrapEmailSender>();
+builder.Services.Configure<DataProtectionTokenProviderOptions>(
+    options => options.TokenLifespan = TimeSpan.FromHours(2));
 builder.Services.AddLogging();
+
+// CORS for MVC client
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowMvcClient", policy =>
+    {
+        policy.WithOrigins("http://localhost:5100", "http://localhost:5031")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

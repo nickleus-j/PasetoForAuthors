@@ -36,7 +36,9 @@ services:
     environment:
       ConnectionStrings__DefaultConnection: "Server=mysql_db;Port=3306;Database=${DB_NAME};Uid=default;Pwd=${USER_PASSWORD};"
       DefaultUserPassword: ${USER_PASSWORD}
-      dockerfile: OpineHere.Identity/Dockerfile
+      Mailtrap__ApiKey: "${MAILTRAP_API_KEY}"
+      Mailtrap__FromEmail: "${MAILTRAP_FROM_EMAIL}"
+      Mailtrap__FromName: "${MAILTRAP_FROM_NAME}"
     ports:
       - "5100:8080"
     expose:

@@ -119,7 +119,31 @@ public class AuthService : IAuthService
         }
         ClearCookies();
     }
+    public async Task<(bool Success, string? Message)> ForgotPasswordAsync(string email, string resetUrl){
+        try
+        {
+            var (success, message) = await _apiClient.ForgotPasswordAsync(email, resetUrl);
+            return (success, message);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Forgot password error: {ex.Message}");
+            return (false, "An error occurred while processing your request.");
+        }
+    }
 
+    public async Task<(bool Success, string? Message, IEnumerable<string>? Errors)> ResetPasswordAsync(
+        string userId, string token, string newPassword, string confirmPassword){
+        try {
+            var (success, message, errors) = await _apiClient.ResetPasswordAsync(
+                userId, token, newPassword, confirmPassword);
+            return (success, message, errors);
+        }
+        catch (Exception ex) {
+            _logger.LogError($"Reset password error: {ex.Message}");
+            return (false, "An error occurred while resetting your password.", null);
+        }
+    }
     private void ClearCookies()
     {
         var context = _httpContextAccessor.HttpContext;

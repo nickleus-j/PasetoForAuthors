@@ -11,4 +11,8 @@ public interface IAuthService
     string GetUserId();
     string GetUserEmail();
     bool IsAuthenticated();
+    Task<(bool Success, string? Message)> ForgotPasswordAsync(string email, string resetUrl);
+
+    Task<(bool Success, string? Message, IEnumerable<string>? Errors)> ResetPasswordAsync(string userId, string token,
+        string newPassword, string confirmPassword);
 }

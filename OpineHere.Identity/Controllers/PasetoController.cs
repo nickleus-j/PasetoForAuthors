@@ -4,7 +4,10 @@ using OpineHere.Identity.Authentication;
 using OpineHere.Identity.Service;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
+using Microsoft.AspNetCore.WebUtilities;
 using OpineHere.Data;
+using OpineHere.Identity.Dto;
 
 namespace OpineHere.Identity.Controllers;
 
@@ -16,17 +19,20 @@ public class PasetoController : Controller
     private readonly ITokenService _tokenService;
     private readonly ILogger<PasetoController> _logger;
     private IDataUnitOfWork _unitOfWork;
+    private IEmailSender _emailSender;
 
     public PasetoController(
         UserManager<IdentityUser> userManager,
         ITokenService tokenService, 
         IDataUnitOfWork unitOfWork,
+        IEmailSender emailSender,
         ILogger<PasetoController> logger)
     {
         _userManager = userManager;
         _tokenService = tokenService;
         _logger = logger;
         _unitOfWork = unitOfWork;
+        _emailSender = emailSender;
     }
     [HttpGet]
     public IActionResult Index()
@@ -215,5 +221,93 @@ public class PasetoController : Controller
             token = newToken,
             expiresIn = "1h"
         });
+    }
+    /// <summary>
+    /// Request a password reset link via email
+    /// </summary>
+    [HttpPost("forgot-password")]
+    public async Task<IActionResult> ForgotPassword(
+        [FromBody] ForgotPasswordRequest request)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        try
+        {
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if (user == null || !await _userManager.IsEmailConfirmedAsync(user))
+            {
+                // Always return OK to prevent email enumeration attacks
+                return Ok(new { message = "If that email exists, a reset link has been sent." });
+            }
+
+            var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            // URL-encode the token since it may contain special characters
+            var encodedToken = WebEncoders.Base64UrlEncode(
+                Encoding.UTF8.GetBytes(resetToken));
+
+            // Build the callback URL pointing to your MVC client
+            var callbackUrl = $"{request.ResetUrl}?userId={user.Id}&token={encodedToken}";
+
+            await _emailSender.SendEmailAsync(
+                user.Email,
+                "Reset your password",
+                $"Reset your password by clicking <a href=\"{callbackUrl}\">here</a>.");
+
+            _logger.LogInformation($"Password reset link sent to {request.Email}");
+
+            return Ok(new { message = "If that email exists, a reset link has been sent." });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Forgot password error: {ex.Message}");
+            return StatusCode(500, new { message = "An error occurred while processing your request" });
+        }
+    }
+
+    /// <summary>
+    /// Reset password using the token from the email link
+    /// </summary>
+    [HttpPost("reset-password")]
+    public async Task<IActionResult> ResetPassword(
+        [FromBody] ResetPasswordRequest request)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        try
+        {
+            var user = await _userManager.FindByIdAsync(request.UserId);
+            if (user == null)
+                return BadRequest(new { message = "Invalid reset request" });
+
+            // Decode the Base64Url-encoded token
+            var decodedToken = Encoding.UTF8.GetString(
+                WebEncoders.Base64UrlDecode(request.Token));
+
+            var result = await _userManager.ResetPasswordAsync(
+                user, decodedToken, request.NewPassword);
+
+            if (!result.Succeeded)
+            {
+                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                _logger.LogWarning($"Password reset failed for {request.UserId}: {errors}");
+                return BadRequest(new
+                {
+                    message = "Password reset failed",
+                    errors = result.Errors.Select(e => e.Description)
+                });
+            }
+
+            _logger.LogInformation($"Password reset successfully for user {request.UserId}");
+
+            return Ok(new { message = "Password has been reset successfully" });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Reset password error: {ex.Message}");
+            return StatusCode(500, new { message = "An error occurred during password reset" });
+        }
     }
 }
