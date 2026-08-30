@@ -134,5 +134,11 @@ namespace OpineHere.mvc.Resources {
                 return ResourceManager.GetString("Preview", resourceCulture);
             }
         }
+        
+        internal static string AnonymousPost {
+            get {
+                return ResourceManager.GetString("AnonymousPost", resourceCulture);
+            }
+        }
     }
 }

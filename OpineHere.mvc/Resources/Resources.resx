@@ -63,4 +63,7 @@
     <data name="Preview" xml:space="preserve">
         <value>Preview</value>
     </data>
+    <data name="AnonymousPost" xml:space="preserve">
+        <value>Opine Anonymously</value>
+    </data>
 </root>

@@ -12,68 +12,55 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@Resources.DefaultAppTitle</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AnnonymousPost">@Resources.DefaultAppTitle</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">@Resources.Privacy</a>
-                    </li>
-                    @if (Context.Items["IsAuthenticated"] is true)
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Write" asp-action="Create">@Resources.MakePost</a>
-                        </li>
-                    }
-                </ul>
-            </div>
-        </div>
-        <!-- Right Authentication Section -->
-       <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                @if (Context.Items["IsAuthenticated"] is true)
-                {
-                    <!-- Authenticated User Section -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" 
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-user-circle"></i>
-                            <span id="greeting"> @Context.Items["UserDisplayName"]</span>
-                        </a>
-                        
-                    </li>
-                    <li>
-                        <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
-                            <button type="submit" class="btn btn-outline-primary">
-                                <i class="fas fa-sign-out-alt"></i> @Resources.Logout
-                            </button>
-                        </form>
-                    </li>
-                }
-                else
-                {
-                    <!-- Unauthenticated User Section -->
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Account" asp-action="Login">
-                            <i class="fas fa-sign-in-alt"></i> @Resources.LogIn
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Account" asp-action="Register">
-                            <i class="fas fa-user-plus"></i> @Resources.Register
-                        </a>
-                    </li>
-                }
-            </ul>
-        </div>
+    <nav class="tile-grid">
+        <ul>
+            <li>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@Resources.DefaultAppTitle</a>
+            </li>
+            <li>
+                <img src="~/opineanonymous.svg"/> <br/>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AnnonymousPost">@Resources.AnonymousPost</a>
+            </li>
+            
+            @if (Context.Items["IsAuthenticated"] is true)
+            {
+                <li class="nav-item">
+                    <img src="~/opine.svg">
+                    <br/>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Write" asp-action="Create">@Resources.MakePost</a>
+                </li>
+                <li>
+                    
+                    <b>&#128100;</b> <br/>
+                    <a  href="#" id="userDropdown" role="button" >
+                        <span id="greeting"> @Context.Items["UserDisplayName"]</span>
+                    </a>
+                </li>
+                <li>
+                    <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-outline-primary">
+                            <i class="fas fa-sign-out-alt"></i> @Resources.Logout
+                        </button>
+                    </form>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <b>&#128100;</b> <br/>
+                    <a class="nav-link" href="/Account/Login">
+                       Log in
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" asp-controller="Account" asp-action="Register">
+                        &#x1F4CB; <br/> 
+                        @Resources.Register
+                    </a>
+                </li>
+            }
+            
+        </ul>
     </nav>
 </header>
 <div class="primary-content">

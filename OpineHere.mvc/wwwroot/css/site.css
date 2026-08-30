@@ -37,6 +37,48 @@ body {
   max-height: 400px;
   overflow-y: hidden;
 }
+.tile-grid {
+  width: 80%;
+  margin: 1px 10%;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #f9fcfa;
+  box-shadow: 1px 4px 3px #888;
+}
+.tile-grid ul{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.tile-grid li {
+  display: inline-block;
+  padding: 5px;
+  text-align: center;
+  width: 20%;
+  max-width: 180px;
+  height: 100%;
+  position: relative;
+}
+.tile-grid li img{
+  max-height: 25px;
+}
+.tile-grid li:hover{
+  background: #f8f9f8;
+}
+.tile-grid li a.navbar-brand{
+  font-weight: bold;
+}
+.tile-grid li a::after{
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1; /* Spreads the clickable area over the whole div */
+  cursor: pointer
+}
+
 @media (min-width: 768px) {
   html {
     font-size: 16px;
@@ -44,10 +86,15 @@ body {
   .primary-content {
     margin: 8% 3%;
   }
+  
 }
 @media (min-width: 1200px) {
   .primary-content {
     margin: 5% 4%;
+  }
+  .tile-grid li {
+    width: 18%;
+    max-width: 200px;
   }
 }
 @media (min-width: 1800px) {
