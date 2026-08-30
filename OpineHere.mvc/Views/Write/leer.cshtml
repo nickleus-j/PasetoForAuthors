@@ -10,9 +10,9 @@
         <h2>@Model.Title</h2>
         @Html.ActionLink(
             Model.AuthorName,
-            "Index",                                    // actionName
-            "Author",                                                   // routeValues
-            new {                                                     // htmlAttributes
+            "Index",                                    
+            "Author",   
+            new { 
                 penName = Model.AuthorName
             },new {@class="btn btn-info"}
         )
