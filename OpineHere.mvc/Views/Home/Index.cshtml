@@ -7,7 +7,7 @@
 <div class="text-center">
     <h1 class="display-4">@ViewData["Title"]</h1>
 </div>
-<div class="row cards-row">
+<div class="cards-row">
     @foreach (var post in Model)
     {
         <div class="card mb-4 bg-light col-md-6 col-lg-4">
@@ -31,7 +31,7 @@
     }
 </div>
 <div class="details">
-    <sub>Page <span class="page-number">1</span></sub>
+    <sub>@Resources.Page <span class="page-number">1</span></sub>
     <span class="article-count">@Model.Count()</span>
 </div>
 @section Scripts

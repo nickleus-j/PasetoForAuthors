@@ -140,5 +140,47 @@ namespace OpineHere.mvc.Resources {
                 return ResourceManager.GetString("AnonymousPost", resourceCulture);
             }
         }
+        
+        internal static string Page {
+            get {
+                return ResourceManager.GetString("Page", resourceCulture);
+            }
+        }
+        
+        internal static string SendReset {
+            get {
+                return ResourceManager.GetString("SendReset", resourceCulture);
+            }
+        }
+        
+        internal static string CheckEmail {
+            get {
+                return ResourceManager.GetString("CheckEmail", resourceCulture);
+            }
+        }
+        
+        internal static string BackLogin {
+            get {
+                return ResourceManager.GetString("BackLogin", resourceCulture);
+            }
+        }
+        
+        internal static string ForgotPassword {
+            get {
+                return ResourceManager.GetString("ForgotPassword", resourceCulture);
+            }
+        }
+        
+        internal static string ForgotPasswordAccountExistLabel {
+            get {
+                return ResourceManager.GetString("ForgotPasswordAccountExistLabel", resourceCulture);
+            }
+        }
+        
+        internal static string CheckSpamFolder {
+            get {
+                return ResourceManager.GetString("CheckSpamFolder", resourceCulture);
+            }
+        }
     }
 }
