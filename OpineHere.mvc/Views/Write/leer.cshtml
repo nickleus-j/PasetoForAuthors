@@ -4,7 +4,6 @@
 @{
     ViewBag.Title = Model.Title;
     Layout = "_Layout";
-    DateTimeOffset utcDateTime = DateTimeOffset.UtcNow; 
 }
 <div class="row">
     <div class="col-sm-10 article-header">
@@ -35,7 +34,6 @@
             const utcStr = el.getAttribute('data-utc');
             if (utcStr) {
                 const date = new Date(utcStr);
-                // .toLocaleString() automatically applies the user's browser culture and local time zone
                 el.textContent = date.toLocaleString(undefined, {
                     dateStyle: 'short',
                     timeStyle: 'short'
