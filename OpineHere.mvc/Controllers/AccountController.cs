@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using OpineHere.Data;
 using OpineHere.mvc.Models;
 using OpineHere.mvc.Service;
 
@@ -181,4 +183,6 @@ public class AccountController : Controller
                 HasToken = !string.IsNullOrEmpty(_authService.GetToken())
             });
         }
+
+        
 }

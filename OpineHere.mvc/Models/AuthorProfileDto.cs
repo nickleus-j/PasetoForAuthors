@@ -13,3 +13,4 @@ public class AuthorProfileDto
     [Display(Name = "Last Name")]
     public string Surname{get; set;}
 }
+public record MagicLinkRequestDto(string Email);

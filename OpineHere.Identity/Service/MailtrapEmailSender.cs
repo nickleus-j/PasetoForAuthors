@@ -50,6 +50,15 @@ public class MailtrapEmailSender : IEmailSender
 
         _logger.LogInformation($"Email sent to {email} via Mailtrap API: {subject}");
     }
+    public async Task SendMagicLinkAsync(string recipientEmail, string magicLink)
+    {
+        var body = $@"
+            <h2>OpineHere Author Login</h2>
+            <p>Click the link below to log in to your author account. This link expires in 15 minutes:</p>
+            <p><a href='{magicLink}'>Log In to OpineHere</a></p>";
+
+        await SendEmailAsync(recipientEmail, "OpineHere", body);
+    }
 }
 
 public class MailtrapSettings
